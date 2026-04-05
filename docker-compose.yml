@@ -1,0 +1,45 @@
+services:
+  app:
+    build: ./app/scr
+    env_file:
+      - ./app/.env
+    volumes:
+      - ./app/scr:/app
+    restart: always
+    depends_on:
+      - database
+      - rabbitmq
+
+  web-proxy:
+    build: ./web-proxy
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./web-proxy/nginx.conf:/etc/nginx/nginx.conf:ro
+    depends_on:
+      - app
+    restart: always
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
+    restart: always
+
+  database:
+    image: postgres:15
+    environment:
+      POSTGRES_DB: ${DB_NAME:-myapp}
+      POSTGRES_USER: ${DB_USER:-user}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-pass}
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    restart: always
+
+volumes:
+  rabbitmq_data:
+  db_data:
