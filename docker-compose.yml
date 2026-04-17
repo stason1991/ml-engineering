@@ -1,0 +1,108 @@
+services:
+  # Аппликешен
+  app:
+    build:
+      context: ./app
+      dockerfile: Dockerfile
+    volumes:
+      - ./app:/app
+    command: uvicorn api:app --host 0.0.0.0 --port 8080
+    ports:
+      - "8080:8080"
+    env_file:
+      - .env
+    environment:
+      - DB_HOST=database
+      - RABBITMQ_HOST=rabbitmq
+      - PYTHONUNBUFFERED=1
+    restart: on-failure
+    depends_on:
+      database:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_started
+
+  # 2. ML-Воркеры (Consumers)
+  worker:
+    build:
+      context: ./app
+      dockerfile: Dockerfile
+    volumes:
+      - ./app:/app
+    command: python worker.py
+    deploy:
+      replicas: 2
+    env_file:
+      - .env
+    environment:
+      - DB_HOST=database
+      - RABBITMQ_HOST=rabbitmq
+      - PYTHONUNBUFFERED=1
+    restart: always
+    depends_on:
+      - database
+      - rabbitmq
+      - app
+
+  # 3. Сервис инициализации БД
+  init-db:
+    build:
+      context: ./app
+      dockerfile: Dockerfile
+    command: python main.py
+    env_file:
+      - .env
+    environment:
+      - DB_HOST=database
+    depends_on:
+      database:
+        condition: service_healthy
+    restart: "no"
+
+  # 4. Прокси (Nginx)
+  web-proxy:
+    build: ./web-proxy
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./web-proxy/nginx.conf:/etc/nginx/nginx.conf:ro
+    depends_on:
+      - app
+    restart: always
+
+  # 5. Брокер сообщений
+  rabbitmq:
+    image: rabbitmq:3-management
+    environment:
+      - RABBITMQ_DEFAULT_USER=${RABBITMQ_DEFAULT_USER}
+      - RABBITMQ_DEFAULT_PASS=${RABBITMQ_DEFAULT_PASS}
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
+    restart: always
+
+  # 6. PostgreSQL
+  database:
+    image: postgres:15
+    container_name: postgres_db
+    environment:
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASS}
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER} -d ${DB_NAME}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    restart: always
+
+volumes:
+  rabbitmq_data:
+  db_data:
