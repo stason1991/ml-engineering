@@ -1,0 +1,172 @@
+{% extends "base.html" %}
+
+{% block title %}Career Path Pro — современный навигатор карьеры в банковском секторе{% endblock %}
+
+{% block content %}
+<!-- Герой-секция -->
+<div class="row align-items-center py-5">
+    <div class="col-lg-6">
+        <div class="badge bg-primary mb-2 px-3 py-2 text-uppercase">Banking FinTech ML</div>
+        <h1 class="display-4 fw-bold mb-4">Career Path Pro</h1>
+        <p class="lead text-muted mb-4">
+            Проектируйте будущее сотрудников с математической точностью. 
+            Система анализирует <strong>82 характеристики</strong> — от KPI и профессионального бэкграунда до 
+            <strong>оценки знаний и мягких навыков</strong> — для построения идеального карьерного трека.
+        </p>
+        <div class="d-grid gap-2 d-md-flex justify-content-md-start">
+            {% if not request.session.access_token %}
+                <a href="{% url 'register' %}" class="btn btn-primary btn-lg px-4 me-md-2 shadow">Начать анализ</a>
+                <a href="{% url 'login' %}" class="btn btn-outline-secondary btn-lg px-4">Вход в систему</a>
+            {% else %}
+                <a href="{% url 'dashboard' %}" class="btn btn-primary btn-lg px-4 shadow">Перейти в кабинет</a>
+            {% endif %}
+        </div>
+    </div>
+    <div class="col-lg-6 d-none d-lg-block text-center">
+        <img src="https://freepik.com" class="img-fluid" alt="Career Path Analysis">
+    </div>
+</div>
+
+<!-- Преимущества -->
+<div class="row mt-5 g-4">
+    <div class="col-md-4">
+        <div class="card h-100 border-0 bg-white p-4 shadow-sm">
+            <div class="card-body">
+                <div class="h3 mb-3">🧬</div>
+                <h5>82 Фактора Анализа</h5>
+                <p class="text-muted small">Учитываем профессиональное образование, <strong>сложные банковские KPI</strong>, а также глубокую оценку знаний и мягких навыков сотрудника.</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card h-100 border-0 bg-white p-4 shadow-sm border-bottom border-primary border-4">
+            <div class="card-body">
+                <div class="h3 mb-3">📐</div>
+                <h5>Косинусное расстояние</h5>
+                <p class="text-muted small">Используем алгоритмы векторного сходства для сопоставления профиля сотрудника с эталонными моделями банковских компетенций.</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card h-100 border-0 bg-white p-4 shadow-sm">
+            <div class="card-body">
+                <div class="h3 mb-3">🎯</div>
+                <h5>24 Целевые позиции</h5>
+                <p class="text-muted small">Точные рекомендации по всем ключевым направлениям: от массового сегмента и IT до рисков и управления офисами.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Секция с Кластерами и Вакансиями -->
+<div class="py-5 mt-5">
+    <div class="text-center mb-5">
+        <h2 class="fw-bold">Карьерная карта: 24 направления</h2>
+        <p class="text-muted">Наша модель сопоставляет сотрудника с одним из шести ключевых банковских кластеров</p>
+    </div>
+
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+        <!-- Розничный бизнес -->
+        <div class="col">
+            <div class="card h-100 shadow-sm border-0">
+                <div class="card-header bg-primary text-white border-0 py-3">
+                    <h6 class="mb-0">Розничный бизнес</h6>
+                </div>
+                <div class="card-body">
+                    <ul class="list-unstyled small mb-0">
+                        <li><strong>Менеджер по продажам</strong> (карты, кредиты)</li>
+                        <li><strong>Главный менеджер</strong> (CSI, объемы)</li>
+                        <li><strong>Выездной менеджер</strong> (мобильность)</li>
+                        <li><strong>Менеджер автокредитования</strong> (салоны)</li>
+                        <li><strong>Ипотечный менеджер</strong> (ГК РФ, сделки)</li>
+                        <li><strong>DSA</strong> (полевые продажи)</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Премиум и Инвестиции -->
+        <div class="col">
+            <div class="card h-100 shadow-sm border-0">
+                <div class="card-header bg-warning text-dark border-0 py-3">
+                    <h6 class="mb-0 fw-bold">Премиум и Инвестиции</h6>
+                </div>
+                <div class="card-body">
+                    <ul class="list-unstyled small mb-0">
+                        <li><strong>Клиентский менеджер Premium</strong> (ДУ, ПИФ)</li>
+                        <li><strong>Руководитель инвест-направления</strong></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Корпоративный бизнес -->
+        <div class="col">
+            <div class="card h-100 shadow-sm border-0">
+                <div class="card-header bg-success text-white border-0 py-3">
+                    <h6 class="mb-0">Корпоративный бизнес (B2B)</h6>
+                </div>
+                <div class="card-body">
+                    <ul class="list-unstyled small mb-0">
+                        <li><strong>Менеджер по работе с ЮЛ</strong> (РКО)</li>
+                        <li><strong>Ведущий менеджер</strong> (Крупный бизнес)</li>
+                        <li><strong>Хантер</strong> (Активный поиск)</li>
+                        <li><strong>Менеджер зарплатных проектов</strong></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Технологии -->
+        <div class="col">
+            <div class="card h-100 shadow-sm border-0">
+                <div class="card-header bg-dark text-white border-0 py-3">
+                    <h6 class="mb-0">Технологии и Аналитика</h6>
+                </div>
+                <div class="card-body">
+                    <ul class="list-unstyled small mb-0">
+                        <li><strong>Data Scientist</strong> (Python, модели)</li>
+                        <li><strong>Data Engineer</strong> (ETL, SQL)</li>
+                        <li><strong>Разработчик ПО</strong></li>
+                        <li><strong>Бизнес/Системный аналитик</strong></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Риски -->
+        <div class="col">
+            <div class="card h-100 shadow-sm border-0">
+                <div class="card-header bg-danger text-white border-0 py-3">
+                    <h6 class="mb-0">Риски и Контроль</h6>
+                </div>
+                <div class="card-body">
+                    <ul class="list-unstyled small mb-0">
+                        <li><strong>Риск-менеджер</strong> (Базель, ЦБ)</li>
+                        <li><strong>Сотрудник СБ</strong> (Антифрод)</li>
+                        <li><strong>Методолог</strong> (Нормативы)</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Управление -->
+        <div class="col">
+            <div class="card h-100 shadow-sm border-0">
+                <div class="card-header bg-info text-dark border-0 py-3">
+                    <h6 class="mb-0 fw-bold">Управление и Сервис</h6>
+                </div>
+                <div class="card-body">
+                    <ul class="list-unstyled small mb-0">
+                        <li><strong>Операционист</strong> (Проводки)</li>
+                        <li><strong>Поддержка</strong> (Контакт-центр)</li>
+                        <li><strong>Руководитель офиса</strong></li>
+                        <li><strong>Заместитель руководителя</strong></li>
+                        <li><strong>Курьерская доставка</strong></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
