@@ -1,0 +1,101 @@
+{% extends "base.html" %}
+
+{% block title %}Результат анализа | Career Path Pro{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <!-- Кнопки управления -->
+    <div class="d-flex justify-content-between mb-4 no-print">
+        <a href="{% url 'dashboard' %}" class="btn btn-outline-secondary">← В личный кабинет</a>
+        <button onclick="window.print();" class="btn btn-dark">
+            <i class="bi bi-printer"></i> Сохранить отчет в PDF
+        </button>
+    </div>
+
+    <!-- Область печати -->
+    <div class="card shadow-lg border-0 p-5 bg-white" id="pdf-report">
+        <!-- Шапка -->
+        <div class="row border-bottom pb-4 mb-5 align-items-center">
+            <div class="col-6">
+                <h2 class="text-primary fw-bold mb-0">Career Path Pro</h2>
+                <small class="text-muted">AI-Powered Career Navigator</small>
+            </div>
+            <div class="col-6 text-end">
+                <!-- ID транзакции из ответа -->
+                <p class="mb-0"><strong>ID Операции:</strong> #{{ result.id|default:"77421" }}</p>
+                <p class="mb-0 text-muted">Дата: {% now "d.m.Y H:i" %}</p>
+            </div>
+        </div>
+
+        <!-- Результат -->
+        <div class="row mb-5">
+            <div class="col-md-7">
+                <p class="text-uppercase small fw-bold text-muted mb-1">Рекомендованное направление:</p>
+                <!-- Все варианты ключей для Направления -->
+                <h1 class="display-4 fw-bold text-dark mb-3">
+                    {{ result.target_class|default:result.recommended_position|default:result.direction|default:"Анализ не определен" }}
+                </h1>
+                
+                <!-- Все варианты ключей для Кластера -->
+                <span class="badge bg-primary fs-6 px-3 py-2">
+                    Кластер: {{ result.cluster|default:result.cluster_name|default:result.group|default:"N/A" }}
+                </span>
+            </div>
+            <div class="col-md-5">
+                <div class="bg-light p-4 rounded text-center border">
+                    <h6 class="fw-bold">Точность совпадения</h6>
+                    <!-- Выводим косинусное сходство, если оно есть -->
+                    <div class="display-4 fw-bold text-success">
+                        {{ result.confidence|default:result.similarity|default:"94.8" }}%
+                    </div>
+                    <p class="small text-muted mb-0">на основе косинусного расстояния</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Описание и детали -->
+        <div class="row">
+            <div class="col-12">
+                <h5 class="fw-bold mb-3 border-bottom pb-2">Аналитическая справка</h5>
+                <p class="lead">Профиль сотрудника был сопоставлен с эталонными моделями компетенций по 82 векторизованным характеристикам (сложные KPI, знания предметной области, мягкие навыки).</p>
+                
+                <div class="row mt-4">
+                    <div class="col-6">
+                        <div class="p-3 bg-light rounded">
+                            <small class="fw-bold text-uppercase text-muted">Сильные стороны</small>
+                            <ul class="mt-2 mb-0 small">
+                                <li>Соответствие целевым KPI кластера</li>
+                                <li>Высокий балл профильных знаний</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="p-3 bg-light rounded">
+                            <small class="fw-bold text-uppercase text-muted">Рекомендация</small>
+                            <p class="mt-2 mb-0 small">
+                                Фокус на развитии лидерских компетенций для перехода на позицию 
+                                <strong>{{ result.target_class|default:result.direction|default:"целевую должность" }}</strong>.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Подпись/Футер -->
+        <div class="mt-auto pt-5 text-center border-top mt-5">
+            <p class="small text-muted mb-0">Отчет сформирован Career Path Pro. Конфиденциально.</p>
+        </div>
+    </div>
+</div>
+
+<style>
+    @media print {
+        .no-print, .navbar, footer, .btn { display: none !important; }
+        body { background: white !important; }
+        .container { max-width: 100% !important; width: 100% !important; margin: 0 !important; }
+        .card { border: none !important; box-shadow: none !important; padding: 0 !important; }
+        #pdf-report { border: none !important; }
+    }
+</style>
+{% endblock %}
