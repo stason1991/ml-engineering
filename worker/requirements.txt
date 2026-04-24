@@ -1,0 +1,8 @@
+pika
+joblib
+numpy
+scikit-learn
+sqlalchemy[asyncio]
+asyncpg
+pydantic-settings
+python-dotenv  

@@ -1,0 +1,94 @@
+{% extends "base.html" %}
+
+{% block title %}Ввод данных | Career Path Pro{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb mb-4">
+                <li class="breadcrumb-item"><a href="{% url 'dashboard' %}">Личный кабинет</a></li>
+                <li class="breadcrumb-item active">Новый анализ</li>
+            </ol>
+        </nav>
+
+        <!-- Блок уведомлений Django -->
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-{% if message.tags == 'error' %}danger{% else %}{{ message.tags }}{% endif %} shadow-sm border-0">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+
+        <div class="card shadow-sm border-0 mb-4">
+            <div class="card-body p-4">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h4 class="mb-0 fw-bold">Анализ компетенций</h4>
+                    <button type="button" class="btn btn-sm btn-outline-primary" onclick="fillExample()">Заполнить пример (82 параметра)</button>
+                </div>
+
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label class="form-label text-muted small fw-bold">ДАННЫЕ СОТРУДНИКА (JSON)</label>
+                        <textarea id="ml_data" name="ml_data" class="form-control font-monospace" rows="12" 
+                            style="font-size: 0.85rem;"
+                            placeholder='Вставьте данные для анализа...' required></textarea>
+                        <div class="form-text mt-2">
+                            Алгоритм рассчитает соответствие профиля должности на основе косинусного сходства векторов.
+                            <strong>После запуска подождите 10 секунд.</strong>
+                        </div>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary btn-lg w-100 shadow-sm">
+                        Запустить расчет соответствия
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Детальные ошибки валидации бэкенда -->
+        {% if invalid_data %}
+        <div class="alert alert-warning shadow-sm border-0">
+            <h6 class="fw-bold">Некорректные параметры:</h6>
+            <ul class="mb-0 small">
+                {% for item in invalid_data %}
+                    <li>{{ item }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+<script>
+function fillExample() {
+    const exampleData = {
+        "gender": 0, "age": 28, "edu_level": 2, "edu_type": 1,
+        "exp_total": 5, "exp_profile": 3, "exp_bank": 2, "exp_mng": 1, "exp_premium": 1,
+        "has_car": 1, "skill_it_edu": 1, "skill_sql_level": 3, "skill_prog_level": 2, "skill_agile_exp": 1,
+        "know_client_service": 1, "know_law_base": 1, "know_bank_struct": 1, "know_accounting": 0,
+        "know_fire_safety": 1, "know_emergency": 1, "know_docs_flow": 1, "know_aml_cft": 1,
+        "know_cybersec": 1, "know_it_arch": 0, "know_basel_standards": 0, "know_lean_method": 1,
+        "know_db_logic": 1, "know_reg_reporting": 0, "kpi_pc_deposit": 95, "kpi_pc_acc_saving": 80,
+        "kpi_pc_ins_life_save": 70, "kpi_pc_ins_life_invest": 0, "kpi_pc_pif": 40, "kpi_pc_trust_mng": 0,
+        "kpi_pc_algo_trade": 0, "kpi_pc_pds": 0, "kpi_pc_loan_cash": 110, "kpi_pc_mortgage": 100,
+        "kpi_pc_loan_auto": 0, "kpi_pc_loan_car_pledge": 0, "kpi_pc_loan_re_pledge": 0,
+        "kpi_pc_loan_edu": 0, "kpi_pc_card_credit": 120, "kpi_pc_card_debit": 150, "kpi_pc_ins_loan": 90,
+        "kpi_pc_ins_box": 100, "kpi_pc_ins_fraud": 80, "kpi_sum_deposit": 500000, "kpi_sum_acc_saving": 300000,
+        "kpi_sum_ins_life_save": 100000, "kpi_sum_ins_life_invest": 0, "kpi_sum_pif": 50000, "kpi_sum_trust_mng": 0,
+        "kpi_sum_algo_trade": 0, "kpi_sum_pds": 0, "kpi_sum_loan_cash": 2000000, "kpi_sum_mortgage": 5000000,
+        "kpi_sum_loan_auto": 0, "kpi_sum_loan_car_pledge": 0, "kpi_sum_loan_re_pledge": 0,
+        "kpi_sum_loan_edu": 0, "kpi_sum_ins_loan": 50000, "kpi_sum_ins_box": 10000, "kpi_sum_ins_fraud": 5000,
+        "qual_penalty": 0, "qual_complaints": 1, 
+        "qual_csi": 5, "qual_speed": 88, "qual_op_errors": 2, // CSI исправлен на 5
+        "qual_returns": 0, "qual_fraud_cases": 0, "qual_target_clients": 45, "qual_marketing_deals": 12,
+        "qual_data_quality": 1, "qual_edu_courses": 1, "qual_portal_news": 1, // Исправлены на флаги (0-1)
+        "soft_conflicts": 4, "soft_negotiation": 4, "soft_mentoring": 3, "soft_project_work": 5, 
+        "soft_mng_feedback": 4, "it_automation_count": 2
+    };
+    document.getElementById('ml_data').value = JSON.stringify(exampleData, null, 4);
+}
+</script>
+{% endblock %}
