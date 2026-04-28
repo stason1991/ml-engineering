@@ -1,0 +1,156 @@
+{% extends "base.html" %}
+
+{% block title %}Career Path Pro | Banking FinTech ML{% endblock %}
+
+{% block content %}
+<!-- Подключаем стили анимации -->
+<link href="https://unpkg.com" rel="stylesheet">
+
+<div class="landing-wrapper overflow-hidden">
+    
+    <!-- HERO SECTION -->
+    <section class="hero-section text-center py-5 mb-5">
+        <div class="container py-5">
+            <h6 class="text-primary fw-bold mb-3 mt-5" data-aos="fade-up" style="letter-spacing: 0.3em;">BANKING // FINTECH // ML</h6>
+            <h1 class="display-1 fw-900 mb-4 text-dark" data-aos="fade-up" data-aos-delay="100">
+                CAREER PATH PRO
+            </h1>
+            <p class="lead text-muted mx-auto mb-5" data-aos="fade-up" data-aos-delay="200" style="max-width: 800px; font-size: 1.5rem; line-height: 1.4;">
+                Проектируйте будущее сотрудников с математической точностью. Система анализирует <span class="text-dark fw-bold">82 характеристики</span> — от KPI до мягких навыков.
+            </p>
+            <div data-aos="fade-up" data-aos-delay="300">
+                <a href="{% url 'dashboard' %}" class="btn btn-dark btn-lg px-5 py-3 rounded-pill fw-bold shadow-lg">
+                    ПЕРЕЙТИ В КАБИНЕТ <i class="bi bi-arrow-right ms-2"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ТЕХНОЛОГИЧЕСКИЙ СТЕК (БЕЗ ИКОНОК) -->
+    <section class="py-5 bg-white border-top border-bottom">
+        <div class="container">
+            <div class="row text-center">
+                <div class="col-md-4 mb-4" data-aos="fade-up">
+                    <h2 class="display-4 fw-900 mb-2 text-primary">82</h2>
+                    <p class="text-uppercase fw-bold small text-muted">Фактора Анализа</p>
+                    <p class="small px-4">Сложные банковские KPI, профессиональное образование и глубокая оценка знаний.</p>
+                </div>
+                <div class="col-md-4 mb-4" data-aos="fade-up" data-aos-delay="100">
+                    <h2 class="display-4 fw-900 mb-2 text-primary">COS</h2>
+                    <p class="text-uppercase fw-bold small text-muted">Косинусное сходство</p>
+                    <p class="small px-4">Векторное сопоставление профиля с эталонными моделями банковских компетенций.</p>
+                </div>
+                <div class="col-md-4 mb-4" data-aos="fade-up" data-aos-delay="200">
+                    <h2 class="display-4 fw-900 mb-2 text-primary">24</h2>
+                    <p class="text-uppercase fw-bold small text-muted">Целевые позиции</p>
+                    <p class="small px-4">Точные рекомендации по всем направлениям: от IT до рисков и управления офисами.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- КАРЬЕРНАЯ КАРТА: GRID STYLE -->
+    <section class="py-5 mt-5">
+        <div class="container">
+            <h2 class="display-3 fw-900 mb-5 text-center" data-aos="zoom-in">24 НАПРАВЛЕНИЯ</h2>
+            
+            <div class="row g-4 mt-4">
+                <!-- Кластер -->
+                <div class="col-md-4" data-aos="fade-right">
+                    <div class="p-4 border-start border-4 border-primary h-100">
+                        <h4 class="fw-900 text-dark mb-4 small text-uppercase">Розничный бизнес</h4>
+                        <ul class="list-unstyled text-muted lh-lg">
+                            <li>Менеджер по продажам</li>
+                            <li>Главный менеджер</li>
+                            <li>Выездной менеджер</li>
+                            <li>Ипотечный менеджер</li>
+                            <li>DSA (полевые продажи)</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- Кластер -->
+                <div class="col-md-4" data-aos="fade-up">
+                    <div class="p-4 border-start border-4 border-dark h-100 bg-light">
+                        <h4 class="fw-900 text-dark mb-4 small text-uppercase">Технологии и Аналитика</h4>
+                        <ul class="list-unstyled text-muted lh-lg">
+                            <li><span class="text-dark fw-bold">Data Scientist</span></li>
+                            <li>Data Engineer</li>
+                            <li>Разработчик ПО</li>
+                            <li>Системный аналитик</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Кластер -->
+                <div class="col-md-4" data-aos="fade-left">
+                    <div class="p-4 border-start border-4 border-primary h-100">
+                        <h4 class="fw-900 text-dark mb-4 small text-uppercase">Корпоративный бизнес</h4>
+                        <ul class="list-unstyled text-muted lh-lg">
+                            <li>Менеджер по работе с ЮЛ</li>
+                            <li>Ведущий менеджер</li>
+                            <li>Хантер</li>
+                            <li>Зарплатные проекты</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Кластер -->
+                <div class="col-md-4" data-aos="fade-right">
+                    <div class="p-4 border-start border-4 border-dark h-100">
+                        <h4 class="fw-900 text-dark mb-4 small text-uppercase">Риски и Контроль</h4>
+                        <ul class="list-unstyled text-muted lh-lg">
+                            <li>Риск-менеджер (Базель)</li>
+                            <li>Сотрудник СБ</li>
+                            <li>Методолог</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Кластер -->
+                <div class="col-md-4" data-aos="fade-up">
+                    <div class="p-4 border-start border-4 border-primary h-100">
+                        <h4 class="fw-900 text-dark mb-4 small text-uppercase">Премиум и Инвестиции</h4>
+                        <ul class="list-unstyled text-muted lh-lg">
+                            <li>Клиентский менеджер Premium</li>
+                            <li>Руководитель инвестиций</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Кластер -->
+                <div class="col-md-4" data-aos="fade-left">
+                    <div class="p-4 border-start border-4 border-dark h-100 bg-light">
+                        <h4 class="fw-900 text-dark mb-4 small text-uppercase">Управление и Сервис</h4>
+                        <ul class="list-unstyled text-muted lh-lg">
+                            <li>Руководитель офиса</li>
+                            <li>Операционист</li>
+                            <li>Поддержка (Контакт-центр)</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+<!-- Инициализация анимации -->
+<script src="https://unpkg.com"></script>
+<script>
+  AOS.init({
+    duration: 1000,
+    once: true,
+  });
+</script>
+
+<style>
+    .fw-900 { font-weight: 900 !important; }
+    .display-1 { letter-spacing: -4px; font-size: 6rem; }
+    @media (max-width: 768px) {
+        .display-1 { font-size: 3.5rem; letter-spacing: -2px; }
+    }
+    .bg-light { background-color: #f5f5f7 !important; } /* Цвет Apple */
+    .hero-section { min-height: 80vh; display: flex; align-items: center; }
+</style>
+
+{% endblock %}

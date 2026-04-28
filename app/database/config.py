@@ -1,0 +1,33 @@
+import os
+from pydantic_settings import BaseSettings, SettingsConfigDict
+from functools import lru_cache
+from typing import Optional
+
+class Settings(BaseSettings):
+  DB_HOST: str
+  DB_PORT: int = 5432
+  DB_USER: str
+  DB_PASS: str
+  DB_NAME: str
+
+  RABBITMQ_HOST: str = "rabbitmq"
+  RABBITMQ_DEFAULT_USER: str = "guest"
+  RABBITMQ_DEFAULT_PASS: str = "guest"
+
+  APP_NAME: str = "My FastAPI Project"
+  APP_DESCRIPTION: str = "ML Model Management System"
+  API_VERSION: str = "1.0.0"
+
+  @property
+  def DATABASE_URL_asyncpg(self) -> str:
+    return f"postgresql+asyncpg://{self.DB_USER}:{self.DB_PASS}@{self.DB_HOST}:{self.DB_PORT}/{self.DB_NAME}"
+
+  @property
+  def DATABASE_URL_psycopg(self) -> str:
+    return f"postgresql+psycopg://{self.DB_USER}:{self.DB_PASS}@{self.DB_HOST}:{self.DB_PORT}/{self.DB_NAME}"
+
+  model_config = SettingsConfigDict(env_file=".env", env_file_encoding='utf-8', extra="ignore")
+
+@lru_cache()
+def get_settings() -> Settings:
+  return Settings()
